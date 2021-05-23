@@ -2,17 +2,19 @@
 Machine learning problem-solving project for Udacity Data Scientist Nanodegree
 
 ## Background
-The notebook is mostly self-explanatory, so this will be brief.  
+The project is contained in the Jupyter notebook `Starbucks.ipynb`. The notebook is mostly self-explanatory, so this will be brief.  
 Starbucks has data on a customer A/B test where receipt of the promotion was randomized, and the rate of purchase of a particular item was tracked. The dataset contains seven customer-related variables, `V1` - `V7`. We aren't told what characteristics these represent.
 
 The goal is to identify which customers should receive a promotion in the future, with the goal of maximizing two metrics:
 - Incremental Response Rate (IRR): difference between proportion of customers in treatment & control groups who make a purchase.    
-$$ IRR = \frac{purch_{treat}}{cust_{treat}} - \frac{purch_{ctrl}}{cust_{ctrl}} $$  
+IRR = (purchases in treatment group)/(customers in treatment group) - (purchases in control group)/(customers in control group)
 
 - Net Incremental Revenue (NIR): The gain in revenue based on how many purchases the treatment group makes compared to the control group, less the cost of sending the promotion. For the exercise, the purchase is a single $10.00 item and the cost of the promotion is $0.15/customer.  
-$$ NIR = (10\cdot purch_{treat} - 0.15 \cdot cust_{treat}) - 10 \cdot purch_{ctrl}$$
+NIR = 10\*(purchases in treatment group) - 0.15\*(customers in treatment group) - 10\*(purchases in control group)
 
 ## Development  
+The training data are in `training.csv`.  
+
 ### Key findings from the cleaning & transformation process:  
 1. There were no fields with missing data.  
 2. There were no obviously mis-coded variables. `V2` and `V3` are continuous variables, with the others are categorical.
@@ -193,10 +195,10 @@ precision: 0.01333; recall: 0.72917, accuracy: 0.53744
 roc_auc: 0.63248
 IRR: 0.01925; NIR: 282.55000
 ```
-Tuning improves on the naive XGBoost model, but it's still not as good as logistic regression. And that fit completes in seconds. 
+Tuning improves on the naive XGBoost model, but it's still not as good as logistic regression. And that fit completes in seconds.
 
 ## Final Results  
-The final test is to read in Starbucks' test data file, predict which customers should receive a promotion, and score the final model based on IRR and NIR.  
+The final test is to read in Starbucks' test data file, predict which customers should receive a promotion, and score the final model based on IRR and NIR.  The test data are in `Test.csv`.
 The format of the test file is identical to that of the training file. All that had to be done was to make the four key dummy variables, put them in an X array, and run the test.
 The notebook comes with a pre-coded scoring script `test_results.py`, which also gives back the best value Starbucks got (tho not how they got it).  
 Drum roll...
