@@ -21,11 +21,7 @@ The training data are in `training.csv`.
 3. There didn't seem to be obvious outliers, although without knowing what the variables actually represent, it's hard to tell.
 4. The variable `Promotion` was recoded from `Yes`-`No` to `[1, 0]`.
 5. Dummy variables were created for all of the categorical columns (`V1`, `V4-V7`).
-6. **The key decision:** Looking at the forms of IRR and NIR and the problem description, it's obvious we want to maximize purchases. But, to see gains, we have to have more purchasers in the promotion group.   
-
-Initially I naively assumed we wanted to target the promotion to **anyone** who made a purchase. But, some of these purchases in the non-promotion group may be attributable to other factors, not the promotion.  
-
-So, I decided to make the target variable `promo+purch`, where 1 represents customers who made a purchase after receiving the promotion, and 0 is everyone else. This is equivalent (to my mind, anyway) to trying to target future promotions to customers like those who've responded to them in the past.   
+6. Creating a target variable: Looking at the forms of IRR and NIR and the problem description, it's obvious we want to maximize purchases. But, to see gains, we have to have more purchasers in the promotion group. Initially I naively assumed we wanted to target the promotion to **anyone** who made a purchase. But, some of these purchases in the non-promotion group may be attributable to other factors, not the promotion. So, I decided to make the target variable `promo+purch`, where 1 represents customers who made a purchase after receiving the promotion, and 0 is everyone else. This is equivalent (to my mind, anyway) to trying to target future promotions to customers like those who've responded to them in the past.   
 
 ### Preliminary analyses of the training dataset:
 1. The promotion was sent to 50.1% of customers. The p-value comparing proportions in the promotion and control group was 0.507, so the promotion was basically randomly distributed.  
@@ -198,9 +194,9 @@ IRR: 0.01925; NIR: 282.55000
 Tuning improves on the naive XGBoost model, but it's still not as good as logistic regression. And that fit completes in seconds.
 
 ## Final Results  
-The final test is to read in Starbucks' test data file, predict which customers should receive a promotion, and score the final model based on IRR and NIR.  The test data are in `Test.csv`.
-The format of the test file is identical to that of the training file. All that had to be done was to make the four key dummy variables, put them in an X array, and run the test.
-The notebook comes with a pre-coded scoring script `test_results.py`, which also gives back the best value Starbucks got (tho not how they got it).  
+The final test is to read in Starbucks' test data file, predict which customers should receive a promotion, and score the final model based on IRR and NIR.  
+The test data are in `Test.csv`. The format of the test file is identical to that of the training file. All that had to be done was to make the four key dummy variables, put them in an X array, and run the test.  
+The notebook comes with a pre-coded scoring script `test_results.py`, which also gives back the best value Starbucks got (though not how they got it).  
 Drum roll...
 ```
 Nice job!  See how well your strategy worked on our test data below!
